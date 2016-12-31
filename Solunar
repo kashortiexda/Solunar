@@ -1,0 +1,62 @@
+from lxml import html
+import requests
+
+page = requests.get('https://tidesnear.me/tide_stations/5557')
+tree = html.fromstring(page.content)
+
+type = tree.xpath('//td[@itemprop="name"]/text()')
+description = tree.xpath('//td[@itemprop="description"]/text()')
+times = tree.xpath('//time[@itemprop="startDate"]/text()')
+
+type = ([s.strip(' tide') for s in type])
+
+h = description
+height = []
+for i in h:
+    height.append(i.strip())
+
+
+height.insert(4, "")
+height.insert(5, "")
+height.insert(12, "")
+height.insert(13, "")
+height.insert(19, "")
+height.insert(20, "")
+height.insert(27, "")
+height.insert(28, "")
+height.insert(35, "")
+height.insert(36, "")
+height.insert(43, "")
+height.insert(44, "")
+height.insert(51, "")
+height.insert(52, "")
+
+t = times
+
+time = []
+for i in t:
+    time.append(i.strip())
+
+time = ([s.strip(' SAST') for s in time])
+
+
+mins = [i.split(':', 1)[1] for i in time]
+minutes = [i.split(' ', 1)[0] for i in mins]
+ampm = [i.split(' ', 1)[1] for i in mins]
+hours = [i.split(':', 1)[0] for i in time]
+hours = [int(i) for i in hours]
+
+
+
+
+alist = type
+blist = height
+clist = hours
+dlist = minutes
+elist = ampm
+
+
+for a, b, c, d, e in zip(alist, blist, clist, dlist, elist):
+    print a
+    print b
+    print c, d, e
