@@ -1,2 +1,2 @@
 # Solunar
-web scraper for tide data
+web scraper for best fishing times
